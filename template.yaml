@@ -1,0 +1,20 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: FastAPI app with AWS Lambda and API Gateway
+Globals:
+  Function:
+    Timeout: 30
+Resources:
+  FastApiFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: fast-api-lambda
+      Runtime: python3.8
+      CodeUri: .
+      Handler: main.app_asgi
+      Events:
+        HttpApi:
+          Type: HttpApi
+          Properties:
+            Path: /{proxy+}
+            Method: ANY
